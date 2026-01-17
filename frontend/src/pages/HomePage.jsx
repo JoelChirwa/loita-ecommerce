@@ -45,9 +45,6 @@ const HomePage = () => {
             transition={{ duration: 0.8 }}
             className="max-w-2xl text-white"
           >
-            <span className="inline-block px-4 py-1.5 mb-6 rounded-full bg-primary/20 backdrop-blur-md border border-white/20 text-sm font-semibold tracking-wider uppercase">
-              New Collection 2024
-            </span>
             <h1 className="text-5xl md:text-7xl font-bold font-display leading-[1.1] mb-6">
               Reveal Your <br />
               <span className="text-primary italic">Natural Beauty</span>

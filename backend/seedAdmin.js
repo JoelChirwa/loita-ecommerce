@@ -9,16 +9,27 @@ const seedAdmin = async () => {
 
     const adminExists = await User.findOne({ role: "admin" });
 
-    // if (adminExists) {
-    //   console.log("Admin user already exists:", adminExists.email);
-    //   process.exit();
-    // }
+    const existingAdmin = await User.findOne({
+      email: "siletiloita@gmail.com",
+    });
+
+    if (existingAdmin) {
+      console.log("Admin user already exists:", existingAdmin.email);
+      // Update their password just in case user wants to reset it via seed
+      existingAdmin.name = "Loita Sileti";
+      existingAdmin.phone = "0884211360";
+      existingAdmin.password = "494949";
+      existingAdmin.role = "admin";
+      await existingAdmin.save();
+      console.log("Admin account updated.");
+      process.exit();
+    }
 
     const admin = new User({
       name: "Loita Sileti",
       email: "siletiloita@gmail.com",
       phone: "0884211360",
-      password: "494949", // User should change this after login
+      password: "494949",
       role: "admin",
     });
 

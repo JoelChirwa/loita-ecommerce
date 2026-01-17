@@ -63,14 +63,22 @@ reviewSchema.statics.calculateAverageRating = async function (productId) {
 };
 
 // Update rating after save
-reviewSchema.post("save", function () {
-  this.constructor.calculateAverageRating(this.product);
+reviewSchema.post("save", function (doc) {
+  if (doc.product) {
+    doc.constructor.calculateAverageRating(doc.product);
+  }
 });
 
-// Update rating after delete
-reviewSchema.post("remove", function () {
-  this.constructor.calculateAverageRating(this.product);
-});
+// Update rating after delete (handling both deleteOne and remove for compatibility)
+reviewSchema.post(
+  /delete|remove/,
+  { document: true, query: false },
+  function (doc) {
+    if (doc && doc.product) {
+      doc.constructor.calculateAverageRating(doc.product);
+    }
+  },
+);
 
 const Review = mongoose.model("Review", reviewSchema);
 export default Review;

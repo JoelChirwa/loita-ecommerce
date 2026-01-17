@@ -95,7 +95,12 @@ app.use((err, req, res, next) => {
     success: false,
     message: err.message || "Internal Server Error",
     path: req.url,
-    error: process.env.NODE_ENV === "development" ? err.stack : undefined,
+    // Return error name and path to help debug production 500s
+    errorType: err.name,
+    debugInfo:
+      process.env.NODE_ENV === "development"
+        ? err.stack
+        : "Check logs for stack trace",
   });
 });
 
