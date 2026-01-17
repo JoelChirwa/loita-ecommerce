@@ -17,8 +17,14 @@ const getProducts = async (req, res) => {
 // @route   GET /api/products/:id
 // @access  Public
 const getProductById = async (req, res) => {
+  const { id } = req.params;
+  if (!id || id === "undefined") {
+    return res
+      .status(400)
+      .json({ success: false, message: "Invalid product ID" });
+  }
   try {
-    const product = await Product.findById(req.params.id);
+    const product = await Product.findById(id);
 
     if (product) {
       res.json({ success: true, product });

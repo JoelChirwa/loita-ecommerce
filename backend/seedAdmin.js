@@ -15,16 +15,16 @@ const seedAdmin = async () => {
     }
 
     const admin = new User({
-      name: "Joel Chirwa",
-      email: "chirwajj@gmail.com",
-      phone: "0881234567",
-      password: "kagawa2020", // User should change this after login
+      name: "Loita Sileti",
+      email: "siletiloita@gmail.com",
+      phone: "0884211360",
+      password: "494949", // User should change this after login
       role: "admin",
     });
 
     await admin.save();
     console.log("Admin user seeded successfully!");
-    console.log("Email: chirwajj@gmail.com");
+    console.log("Email: siletiloita@gmail.com");
 
     process.exit();
   } catch (error) {

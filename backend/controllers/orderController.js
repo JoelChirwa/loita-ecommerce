@@ -87,12 +87,10 @@ const verifyOrderPayment = async (req, res) => {
         order,
       });
     } else {
-      res
-        .status(400)
-        .json({
-          success: false,
-          message: "Payment verification failed or pending",
-        });
+      res.status(400).json({
+        success: false,
+        message: "Payment verification failed or pending",
+      });
     }
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
@@ -104,7 +102,9 @@ const verifyOrderPayment = async (req, res) => {
 // @access  Private
 const getMyOrders = async (req, res) => {
   try {
-    const orders = await Order.find({ user: req.user._id }).sort("-createdAt");
+    const orders = await Order.find({ user: req.user._id })
+      .populate("products.product", "name images")
+      .sort("-createdAt");
     res.json({ success: true, orders });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
