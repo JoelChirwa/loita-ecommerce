@@ -41,7 +41,8 @@ const ProductDetailsPage = () => {
       setReviews(revData.reviews || []);
       setLoading(false);
     } catch (error) {
-      toast.error("Product not found");
+      const msg = error.response?.data?.message || "Product not found";
+      toast.error(msg);
       setLoading(false);
     }
   };

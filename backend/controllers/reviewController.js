@@ -54,13 +54,24 @@ const createReview = async (req, res) => {
 // @route   GET /api/reviews/:productId
 // @access  Public
 const getProductReviews = async (req, res) => {
+  const { productId } = req.params;
+
+  if (!productId || productId === "undefined") {
+    return res
+      .status(400)
+      .json({ success: false, message: "Invalid product ID" });
+  }
+
   try {
-    const reviews = await Review.find({ product: req.params.productId })
+    const reviews = await Review.find({ product: productId })
       .populate("user", "name")
       .sort("-createdAt");
     res.json({ success: true, reviews });
   } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
+    res.status(500).json({
+      success: false,
+      message: error.name === "CastError" ? "Invalid ID format" : error.message,
+    });
   }
 };
 

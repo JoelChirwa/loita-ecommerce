@@ -32,7 +32,10 @@ const getProductById = async (req, res) => {
       res.status(404).json({ success: false, message: "Product not found" });
     }
   } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
+    res.status(500).json({
+      success: false,
+      message: error.name === "CastError" ? "Malformed ID" : error.message,
+    });
   }
 };
 

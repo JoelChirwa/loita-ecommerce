@@ -9,10 +9,10 @@ const seedAdmin = async () => {
 
     const adminExists = await User.findOne({ role: "admin" });
 
-    if (adminExists) {
-      console.log("Admin user already exists:", adminExists.email);
-      process.exit();
-    }
+    // if (adminExists) {
+    //   console.log("Admin user already exists:", adminExists.email);
+    //   process.exit();
+    // }
 
     const admin = new User({
       name: "Loita Sileti",

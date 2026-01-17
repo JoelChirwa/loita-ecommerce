@@ -28,27 +28,37 @@ const reviewSchema = new mongoose.Schema(
 
 // Static method to calculate average rating
 reviewSchema.statics.calculateAverageRating = async function (productId) {
-  const stats = await this.aggregate([
-    { $match: { product: productId } },
-    {
-      $group: {
-        _id: "$product",
-        nRating: { $sum: 1 },
-        avgRating: { $avg: "$rating" },
+  try {
+    const stats = await this.aggregate([
+      {
+        $match: {
+          product: new mongoose.Types.ObjectId(productId.toString()),
+        },
       },
-    },
-  ]);
+      {
+        $group: {
+          _id: "$product",
+          nRating: { $sum: 1 },
+          avgRating: { $avg: "$rating" },
+        },
+      },
+    ]);
 
-  if (stats.length > 0) {
-    await mongoose.model("Product").findByIdAndUpdate(productId, {
-      ratingCount: stats[0].nRating,
-      ratingAverage: Math.round(stats[0].avgRating * 10) / 10,
-    });
-  } else {
-    await mongoose.model("Product").findByIdAndUpdate(productId, {
-      ratingCount: 0,
-      ratingAverage: 0,
-    });
+    const ProductModel = mongoose.model("Product");
+
+    if (stats.length > 0) {
+      await ProductModel.findByIdAndUpdate(productId, {
+        ratingCount: stats[0].nRating,
+        ratingAverage: Math.round(stats[0].avgRating * 10) / 10,
+      });
+    } else {
+      await ProductModel.findByIdAndUpdate(productId, {
+        ratingCount: 0,
+        ratingAverage: 0,
+      });
+    }
+  } catch (error) {
+    console.error("Error in calculateAverageRating:", error);
   }
 };
 
