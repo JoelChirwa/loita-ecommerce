@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { CheckCircle2, Clock, Phone, ArrowRight, Package } from "lucide-react";
-import axios from "axios";
+import API from "../utils/api";
 import { useAuthStore } from "../store/authStore";
 import { useCartStore } from "../store/cartStore";
 import { motion } from "framer-motion";
@@ -16,12 +16,7 @@ const OrderSuccessPage = () => {
   useEffect(() => {
     const vRef = async () => {
       try {
-        const { data } = await axios.get(
-          `http://localhost:5000/api/orders/${id}/verify`,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          },
-        );
+        const { data } = await API.get(`/orders/${id}/verify`);
         if (data.success) {
           setSuccess(true);
           clearCart();

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import ProductCard from "../components/ProductCard";
+import API from "../utils/api";
 import { Search, Filter, SlidersHorizontal } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -14,7 +14,7 @@ const ProductsPage = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const { data } = await axios.get("http://localhost:5000/api/products");
+        const { data } = await API.get("/products");
         setProducts(data.products);
         setLoading(false);
       } catch (err) {

@@ -8,8 +8,7 @@ import {
   Package,
   Clock,
 } from "lucide-react";
-import axios from "axios";
-import { useAuthStore } from "../../store/authStore";
+import API from "../../utils/api";
 
 const StatCard = ({ title, value, icon: Icon, color }) => (
   <div className="bg-white p-6 rounded-[2rem] border border-border shadow-sm">
@@ -40,15 +39,8 @@ const AdminDashboard = () => {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const { data: ordersData } = await axios.get(
-          "http://localhost:5000/api/orders",
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          },
-        );
-        const { data: productsData } = await axios.get(
-          "http://localhost:5000/api/products",
-        );
+        const { data: ordersData } = await API.get("/orders");
+        const { data: productsData } = await API.get("/products");
 
         const totalSales = ordersData.orders
           .filter((o) => o.paymentStatus === "paid")

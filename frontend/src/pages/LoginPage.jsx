@@ -4,9 +4,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Eye, EyeOff, Mail, Lock, ArrowRight } from "lucide-react";
-import axios from "axios";
 import { useAuthStore } from "../store/authStore";
 import { toast } from "sonner";
+import API from "../utils/api";
 
 const schema = z.object({
   email: z.string().email("Invalid email address"),
@@ -32,10 +32,7 @@ const LoginPage = () => {
   const onSubmit = async (values) => {
     setLoading(true);
     try {
-      const { data } = await axios.post(
-        "http://localhost:5000/api/auth/login",
-        values,
-      );
+      const { data } = await API.post("/auth/login", values);
       if (data.success) {
         setAuth(data, data.token);
         toast.success(`Welcome back, ${data.name}!`);

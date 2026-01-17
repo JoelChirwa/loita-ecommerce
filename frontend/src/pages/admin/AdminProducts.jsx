@@ -11,7 +11,7 @@ import {
   Upload,
   Loader2,
 } from "lucide-react";
-import axios from "axios";
+import API from "../../utils/api";
 import { useAuthStore } from "../../store/authStore";
 import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
@@ -44,7 +44,7 @@ const AdminProducts = () => {
 
   const fetchProducts = async () => {
     try {
-      const { data } = await axios.get("http://localhost:5000/api/products");
+      const { data } = await API.get("/products");
       setProducts(data.products);
       setLoading(false);
     } catch (error) {
@@ -93,16 +93,11 @@ const AdminProducts = () => {
 
     setUploading(true);
     try {
-      const { data } = await axios.post(
-        "http://localhost:5000/api/upload",
-        fileFormData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${token}`,
-          },
+      const { data } = await API.post("/upload", fileFormData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
         },
-      );
+      });
 
       if (data.success) {
         setFormData({
@@ -142,18 +137,10 @@ const AdminProducts = () => {
       };
 
       if (editingProduct) {
-        await axios.put(
-          `http://localhost:5000/api/products/${editingProduct._id}`,
-          payload,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          },
-        );
+        await API.put(`/products/${editingProduct._id}`, payload);
         toast.success("Product updated!");
       } else {
-        await axios.post("http://localhost:5000/api/products", payload, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        await API.post("/products", payload);
         toast.success("Product added!");
       }
       setIsModalOpen(false);
@@ -166,9 +153,7 @@ const AdminProducts = () => {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this product?")) {
       try {
-        await axios.delete(`http://localhost:5000/api/products/${id}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        await API.delete(`/products/${id}`);
         toast.success("Product deleted");
         fetchProducts();
       } catch (error) {

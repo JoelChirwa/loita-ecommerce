@@ -4,9 +4,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff, Mail, Lock, User, Phone, ArrowRight } from "lucide-react";
-import axios from "axios";
 import { useAuthStore } from "../store/authStore";
 import { toast } from "sonner";
+import API from "../utils/api";
 
 const schema = z
   .object({
@@ -38,10 +38,7 @@ const RegisterPage = () => {
   const onSubmit = async (values) => {
     setLoading(true);
     try {
-      const { data } = await axios.post(
-        "http://localhost:5000/api/auth/register",
-        values,
-      );
+      const { data } = await API.post("/auth/register", values);
       if (data.success) {
         setAuth(data, data.token);
         toast.success(`Welcome to Loita Avon, ${data.name}!`);
