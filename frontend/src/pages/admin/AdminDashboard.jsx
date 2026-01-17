@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import AdminLayout from "../../layouts/AdminLayout";
 import {
   TrendingUp,
@@ -177,8 +178,9 @@ const AdminDashboard = () => {
                 link: "/admin/customers",
               },
             ].map((action, i) => (
-              <button
+              <Link
                 key={i}
+                to={action.link}
                 className="w-full flex items-center justify-between p-4 rounded-2xl bg-muted/50 hover:bg-primary/10 hover:border-primary/20 border border-transparent transition-all group"
               >
                 <div className="flex items-center gap-3">
@@ -191,7 +193,7 @@ const AdminDashboard = () => {
                   size={16}
                   className="text-muted-foreground opacity-0 group-hover:opacity-100 transition-all -translate-x-2 group-hover:translate-x-0"
                 />
-              </button>
+              </Link>
             ))}
           </div>
 
