@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import API from "../utils/api";
 import { useAuthStore } from "../store/authStore";
 import {
   User as UserIcon,
@@ -22,12 +22,7 @@ const ProfilePage = () => {
   useEffect(() => {
     const fetchMyOrders = async () => {
       try {
-        const { data } = await axios.get(
-          "http://localhost:5000/api/orders/my-orders",
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          },
-        );
+        const { data } = await API.get("/orders/my-orders");
         setOrders(data.orders);
         setLoading(false);
       } catch (error) {

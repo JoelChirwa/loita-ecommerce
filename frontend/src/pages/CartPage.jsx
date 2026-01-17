@@ -4,7 +4,7 @@ import { useAuthStore } from "../store/authStore";
 import { Link, useNavigate } from "react-router-dom";
 import { Trash2, Plus, Minus, ArrowLeft, ShoppingBag } from "lucide-react";
 import { toast } from "sonner";
-import axios from "axios";
+import API from "../utils/api";
 
 const CartPage = () => {
   const { cartItems, removeItem, updateQty, clearCart, getTotal } =
@@ -25,13 +25,7 @@ const CartPage = () => {
         deliveryNotes: "",
       };
 
-      const { data } = await axios.post(
-        "http://localhost:5000/api/orders",
-        orderData,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        },
-      );
+      const { data } = await API.post("/orders", orderData);
 
       if (data.success) {
         // Redirect to PayChangu Checkout

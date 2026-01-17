@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import AdminLayout from "../../layouts/AdminLayout";
 import { Search, Star, Trash2, MessageSquare, User } from "lucide-react";
-import axios from "axios";
+import API from "../../utils/api";
 import { useAuthStore } from "../../store/authStore";
 import { toast } from "sonner";
 
@@ -14,12 +14,7 @@ const AdminReviews = () => {
   const fetchReviews = async () => {
     try {
       // Fetch all reviews
-      const { data } = await axios.get(
-        "http://localhost:5000/api/reviews/all",
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        },
-      );
+      const { data } = await API.get("/reviews/all");
       setReviews(data.reviews);
       setLoading(false);
     } catch (error) {
@@ -35,9 +30,7 @@ const AdminReviews = () => {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this review?")) {
       try {
-        await axios.delete(`http://localhost:5000/api/reviews/${id}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        await API.delete(`/reviews/${id}`);
         toast.success("Review deleted");
         fetchReviews();
       } catch (error) {

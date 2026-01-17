@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import AdminLayout from "../../layouts/AdminLayout";
 import { Search, Mail, Phone, Calendar, User } from "lucide-react";
-import axios from "axios";
+import API from "../../utils/api";
 import { useAuthStore } from "../../store/authStore";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
@@ -15,9 +15,7 @@ const AdminCustomers = () => {
   const fetchCustomers = async () => {
     try {
       // We need to implement this endpoint on the backend
-      const { data } = await axios.get("http://localhost:5000/api/auth/users", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const { data } = await API.get("/auth/users");
       setCustomers(data.users);
       setLoading(false);
     } catch (error) {

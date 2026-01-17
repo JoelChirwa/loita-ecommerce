@@ -9,7 +9,7 @@ import {
   Phone,
   User as UserIcon,
 } from "lucide-react";
-import axios from "axios";
+import API from "../../utils/api";
 import { useAuthStore } from "../../store/authStore";
 import { toast } from "sonner";
 
@@ -20,9 +20,7 @@ const AdminOrders = () => {
 
   const fetchOrders = async () => {
     try {
-      const { data } = await axios.get("http://localhost:5000/api/orders", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const { data } = await API.get("/orders");
       setOrders(data.orders);
       setLoading(false);
     } catch (error) {
@@ -37,13 +35,7 @@ const AdminOrders = () => {
 
   const handleMarkDelivered = async (id) => {
     try {
-      await axios.put(
-        `http://localhost:5000/api/orders/${id}/deliver`,
-        {},
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        },
-      );
+      await API.put(`/orders/${id}/deliver`, {});
       toast.success("Order marked as delivered");
       fetchOrders();
     } catch (error) {

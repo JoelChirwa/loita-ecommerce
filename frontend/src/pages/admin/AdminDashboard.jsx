@@ -9,6 +9,7 @@ import {
   Clock,
 } from "lucide-react";
 import API from "../../utils/api";
+import { useAuthStore } from "../../store/authStore";
 
 const StatCard = ({ title, value, icon: Icon, color }) => (
   <div className="bg-white p-6 rounded-[2rem] border border-border shadow-sm">
