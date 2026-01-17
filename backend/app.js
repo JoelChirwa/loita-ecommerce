@@ -25,7 +25,20 @@ app.use(
 );
 app.use(
   cors({
-    origin: [allowedOrigin, "http://localhost:5173", "http://localhost:5174"],
+    origin: (origin, callback) => {
+      const allowedOrigins = [
+        allowedOrigin,
+        "http://localhost:5173",
+        "http://localhost:5174",
+        "https://loita-avon-shop.vercel.app",
+        "https://loita-avon.vercel.app",
+      ];
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   }),
 );
@@ -36,6 +49,15 @@ app.use(express.urlencoded({ extended: true }));
 // 2. Health check / Root route (placed BEFORE DB middleware for reliability)
 app.get("/", (req, res) => {
   res.json({ message: "Loita Avon Shop API is running..." });
+});
+
+// Diagnostic route (No DB required)
+app.get("/api/health", (req, res) => {
+  res.json({
+    success: true,
+    message: "System is healthy",
+    timestamp: new Date(),
+  });
 });
 
 // 3. Database Middleware (Ensure connection on every request for serverless)
@@ -68,10 +90,12 @@ app.use((req, res) => {
 
 // 6. Error handling middleware
 app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({
+  console.error(`Error on ${req.method} ${req.url}:`, err.stack);
+  res.status(err.status || 500).json({
     success: false,
     message: err.message || "Internal Server Error",
+    path: req.url,
+    error: process.env.NODE_ENV === "development" ? err.stack : undefined,
   });
 });
 
