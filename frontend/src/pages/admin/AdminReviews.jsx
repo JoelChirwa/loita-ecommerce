@@ -57,8 +57,8 @@ const AdminReviews = () => {
         </div>
       </div>
 
-      <div className="bg-white rounded-[2.5rem] border border-border overflow-hidden shadow-sm">
-        <div className="p-6 border-b border-border flex items-center justify-between">
+      <div className="bg-white rounded-[2rem] md:rounded-[2.5rem] border border-border overflow-hidden shadow-sm">
+        <div className="p-4 md:p-6 border-b border-border flex items-center justify-between">
           <div className="relative w-full max-w-sm">
             <Search
               size={18}
@@ -75,14 +75,14 @@ const AdminReviews = () => {
         </div>
 
         <div className="overflow-x-auto">
-          <table className="w-full text-left">
+          <table className="w-full text-left min-w-[700px]">
             <thead>
-              <tr className="bg-muted/30 text-xs font-bold uppercase tracking-widest text-muted-foreground">
-                <th className="px-8 py-4">Product</th>
-                <th className="px-8 py-4">Customer</th>
-                <th className="px-8 py-4">Rating</th>
-                <th className="px-8 py-4">Comment</th>
-                <th className="px-8 py-4 text-right">Actions</th>
+              <tr className="bg-muted/30 text-[10px] md:text-xs font-bold uppercase tracking-widest text-muted-foreground">
+                <th className="px-4 md:px-8 py-4">Product</th>
+                <th className="px-4 md:px-8 py-4">Customer</th>
+                <th className="px-4 md:px-8 py-4">Rating</th>
+                <th className="px-4 md:px-8 py-4">Comment</th>
+                <th className="px-4 md:px-8 py-4 text-right">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border">
@@ -109,39 +109,39 @@ const AdminReviews = () => {
                     key={r._id}
                     className="group hover:bg-muted/10 transition-colors"
                   >
-                    <td className="px-8 py-5">
-                      <span className="text-sm font-bold">
+                    <td className="px-4 md:px-8 py-4">
+                      <span className="text-xs md:text-sm font-bold line-clamp-1">
                         {r.product?.name || "Deleted Product"}
                       </span>
                     </td>
-                    <td className="px-8 py-5">
+                    <td className="px-4 md:px-8 py-4">
                       <div className="flex items-center gap-2">
-                        <User size={14} className="text-muted-foreground" />
-                        <span className="text-sm">
+                        <User size={12} className="text-muted-foreground" />
+                        <span className="text-[10px] md:text-sm whitespace-nowrap">
                           {r.user?.name || "Unknown User"}
                         </span>
                       </div>
                     </td>
-                    <td className="px-8 py-5">
-                      <div className="flex items-center gap-1 text-yellow-500">
+                    <td className="px-4 md:px-8 py-4">
+                      <div className="flex items-center gap-0.5 text-yellow-500">
                         {[...Array(5)].map((_, i) => (
                           <Star
                             key={i}
-                            size={14}
+                            size={12}
                             fill={i < r.rating ? "currentColor" : "none"}
                           />
                         ))}
                       </div>
                     </td>
-                    <td className="px-8 py-5">
-                      <p className="text-sm line-clamp-2 max-w-xs">
+                    <td className="px-4 md:px-8 py-4">
+                      <p className="text-[10px] md:text-sm line-clamp-2 max-w-[200px] md:max-w-xs">
                         {r.comment}
                       </p>
                     </td>
-                    <td className="px-8 py-5 text-right">
+                    <td className="px-4 md:px-8 py-4 text-right">
                       <button
                         onClick={() => handleDelete(r._id)}
-                        className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors opacity-0 group-hover:opacity-100"
+                        className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors md:opacity-0 md:group-hover:opacity-100"
                       >
                         <Trash2 size={16} />
                       </button>

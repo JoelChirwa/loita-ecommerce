@@ -165,19 +165,22 @@ const AdminProducts = () => {
   return (
     <AdminLayout>
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
-        <div>
+        <div className="order-2 md:order-1">
           <h1 className="text-3xl font-bold font-display">Manage Products</h1>
-          <p className="text-muted-foreground">
+          <p className="text-muted-foreground text-sm">
             Add, edit or remove products from your shop.
           </p>
         </div>
-        <button onClick={() => handleOpenModal()} className="btn-primary">
+        <button
+          onClick={() => handleOpenModal()}
+          className="btn-primary w-full md:w-auto order-1 md:order-2"
+        >
           <Plus size={20} /> Add Product
         </button>
       </div>
 
-      <div className="bg-white rounded-[2.5rem] border border-border overflow-hidden shadow-sm">
-        <div className="p-6 border-b border-border flex items-center justify-between">
+      <div className="bg-white rounded-[2rem] md:rounded-[2.5rem] border border-border overflow-hidden shadow-sm">
+        <div className="p-4 md:p-6 border-b border-border">
           <div className="relative w-full max-w-sm">
             <Search
               size={18}
@@ -192,60 +195,62 @@ const AdminProducts = () => {
         </div>
 
         <div className="overflow-x-auto">
-          <table className="w-full text-left">
+          <table className="w-full text-left min-w-[600px]">
             <thead>
-              <tr className="bg-muted/30 text-xs font-bold uppercase tracking-widest text-muted-foreground">
-                <th className="px-8 py-4">Product</th>
-                <th className="px-8 py-4">Category</th>
-                <th className="px-8 py-4">Price</th>
-                <th className="px-8 py-4">Stock</th>
-                <th className="px-8 py-4 text-right">Actions</th>
+              <tr className="bg-muted/30 text-[10px] md:text-xs font-bold uppercase tracking-widest text-muted-foreground">
+                <th className="px-4 md:px-8 py-4">Product</th>
+                <th className="px-4 md:px-8 py-4">Category</th>
+                <th className="px-4 md:px-8 py-4">Price</th>
+                <th className="px-4 md:px-8 py-4">Stock</th>
+                <th className="px-4 md:px-8 py-4 text-right">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border">
               {products.map((p) => (
                 <tr
                   key={p._id}
-                  className="group hover:bg-muted/20 transition-colors"
+                  className="group hover:bg-muted/10 transition-colors"
                 >
-                  <td className="px-8 py-5">
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-xl bg-muted overflow-hidden flex-shrink-0">
+                  <td className="px-4 md:px-8 py-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-muted overflow-hidden flex-shrink-0">
                         <img
                           src={p.images?.[0]?.url}
                           alt={p.name}
                           className="w-full h-full object-cover"
                         />
                       </div>
-                      <span className="font-bold text-sm">{p.name}</span>
+                      <span className="font-bold text-xs md:text-sm line-clamp-1">
+                        {p.name}
+                      </span>
                     </div>
                   </td>
-                  <td className="px-8 py-5">
-                    <span className="text-xs font-semibold px-3 py-1 bg-muted rounded-full uppercase tracking-tighter">
+                  <td className="px-4 md:px-8 py-4">
+                    <span className="text-[10px] font-semibold px-2 md:px-3 py-1 bg-muted rounded-full uppercase tracking-tighter">
                       {p.category}
                     </span>
                   </td>
-                  <td className="px-8 py-5 font-bold text-sm">
+                  <td className="px-4 md:px-8 py-4 font-bold text-xs md:text-sm">
                     MK {p.price.toLocaleString()}
                   </td>
-                  <td className="px-8 py-5 text-sm">
+                  <td className="px-4 md:px-8 py-4 text-xs md:text-sm">
                     <span
                       className={`font-bold ${p.stock < 10 ? "text-red-500" : "text-green-600"}`}
                     >
-                      {p.stock} units
+                      {p.stock} <span className="hidden sm:inline">units</span>
                     </span>
                   </td>
-                  <td className="px-8 py-5 text-right">
-                    <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <td className="px-4 md:px-8 py-4 text-right">
+                    <div className="flex items-center justify-end gap-1 md:gap-2 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
                       <button
                         onClick={() => handleOpenModal(p)}
-                        className="p-2 hover:bg-white rounded-lg shadow-sm text-primary transition-all"
+                        className="p-2 hover:bg-muted rounded-lg text-primary transition-all"
                       >
                         <Edit3 size={16} />
                       </button>
                       <button
                         onClick={() => handleDelete(p._id)}
-                        className="p-2 hover:bg-white rounded-lg shadow-sm text-red-500 transition-all"
+                        className="p-2 hover:bg-muted rounded-lg text-red-500 transition-all"
                       >
                         <Trash2 size={16} />
                       </button>

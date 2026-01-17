@@ -65,8 +65,8 @@ const AdminOrders = () => {
         </p>
       </div>
 
-      <div className="bg-white rounded-[2.5rem] border border-border shadow-sm overflow-hidden">
-        <div className="p-6 border-b border-border">
+      <div className="bg-white rounded-[2rem] md:rounded-[2.5rem] border border-border shadow-sm overflow-hidden">
+        <div className="p-4 md:p-6 border-b border-border">
           <div className="relative w-full max-w-sm">
             <Search
               size={18}
@@ -81,26 +81,26 @@ const AdminOrders = () => {
         </div>
 
         <div className="overflow-x-auto">
-          <table className="w-full text-left">
+          <table className="w-full text-left min-w-[700px]">
             <thead>
-              <tr className="bg-muted/30 text-xs font-bold uppercase tracking-widest text-muted-foreground">
-                <th className="px-8 py-4">Order Details</th>
-                <th className="px-8 py-4">Customer</th>
-                <th className="px-8 py-4">Amount</th>
-                <th className="px-8 py-4">Payment</th>
-                <th className="px-8 py-4">Fulfillment</th>
-                <th className="px-8 py-4 text-right">Actions</th>
+              <tr className="bg-muted/30 text-[10px] md:text-xs font-bold uppercase tracking-widest text-muted-foreground">
+                <th className="px-4 md:px-8 py-4">Order Details</th>
+                <th className="px-4 md:px-8 py-4">Customer</th>
+                <th className="px-4 md:px-8 py-4">Amount</th>
+                <th className="px-4 md:px-8 py-4">Payment</th>
+                <th className="px-4 md:px-8 py-4">Fulfillment</th>
+                <th className="px-4 md:px-8 py-4 text-right">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border">
               {orders.map((order) => (
                 <tr
                   key={order._id}
-                  className="group hover:bg-muted/20 transition-colors"
+                  className="group hover:bg-muted/10 transition-colors"
                 >
-                  <td className="px-8 py-5">
+                  <td className="px-4 md:px-8 py-5">
                     <div className="flex flex-col">
-                      <span className="font-bold text-sm">
+                      <span className="font-bold text-xs md:text-sm">
                         #{order._id.slice(-8).toUpperCase()}
                       </span>
                       <span className="text-[10px] text-muted-foreground">
@@ -108,22 +108,22 @@ const AdminOrders = () => {
                       </span>
                     </div>
                   </td>
-                  <td className="px-8 py-5">
+                  <td className="px-4 md:px-8 py-5">
                     <div className="flex flex-col">
-                      <span className="text-sm font-semibold">
+                      <span className="text-xs md:text-sm font-semibold">
                         {order.user?.name}
                       </span>
-                      <span className="text-xs text-muted-foreground flex items-center gap-1">
+                      <span className="text-[10px] text-muted-foreground flex items-center gap-1">
                         <Phone size={10} /> {order.user?.phone || "N/A"}
                       </span>
                     </div>
                   </td>
-                  <td className="px-8 py-5 font-bold text-sm">
+                  <td className="px-4 md:px-8 py-5 font-bold text-xs md:text-sm whitespace-nowrap">
                     MK {order.totalAmount.toLocaleString()}
                   </td>
-                  <td className="px-8 py-5">
+                  <td className="px-4 md:px-8 py-5">
                     <span
-                      className={`text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest flex items-center gap-1 w-max ${getStatusBg(order.paymentStatus)}`}
+                      className={`text-[9px] md:text-[10px] font-bold px-2 md:px-3 py-1 rounded-full uppercase tracking-widest flex items-center gap-1 w-max ${getStatusBg(order.paymentStatus)}`}
                     >
                       {order.paymentStatus === "paid" ? (
                         <CheckCircle2 size={10} />
@@ -133,9 +133,9 @@ const AdminOrders = () => {
                       {order.paymentStatus}
                     </span>
                   </td>
-                  <td className="px-8 py-5">
+                  <td className="px-4 md:px-8 py-5">
                     <span
-                      className={`text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest flex items-center gap-1 w-max ${getStatusBg(order.orderStatus)}`}
+                      className={`text-[9px] md:text-[10px] font-bold px-2 md:px-3 py-1 rounded-full uppercase tracking-widest flex items-center gap-1 w-max ${getStatusBg(order.orderStatus)}`}
                     >
                       {order.orderStatus === "delivered" ? (
                         <CheckCircle2 size={10} />
@@ -145,12 +145,12 @@ const AdminOrders = () => {
                       {order.orderStatus.replace("_", " ")}
                     </span>
                   </td>
-                  <td className="px-8 py-5 text-right">
+                  <td className="px-4 md:px-8 py-5 text-right whitespace-nowrap">
                     {order.orderStatus !== "delivered" &&
                       order.paymentStatus === "paid" && (
                         <button
                           onClick={() => handleMarkDelivered(order._id)}
-                          className="text-xs font-bold text-primary hover:underline flex items-center justify-end gap-1 ml-auto"
+                          className="text-[10px] md:text-xs font-bold text-primary hover:underline flex items-center justify-end gap-1 ml-auto"
                         >
                           Mark Delivered <ExternalLink size={12} />
                         </button>

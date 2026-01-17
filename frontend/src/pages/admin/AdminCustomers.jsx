@@ -45,8 +45,8 @@ const AdminCustomers = () => {
         </div>
       </div>
 
-      <div className="bg-white rounded-[2.5rem] border border-border overflow-hidden shadow-sm">
-        <div className="p-6 border-b border-border flex items-center justify-between">
+      <div className="bg-white rounded-[2rem] md:rounded-[2.5rem] border border-border overflow-hidden shadow-sm">
+        <div className="p-4 md:p-6 border-b border-border flex items-center justify-between">
           <div className="relative w-full max-w-sm">
             <Search
               size={18}
@@ -63,13 +63,13 @@ const AdminCustomers = () => {
         </div>
 
         <div className="overflow-x-auto">
-          <table className="w-full text-left">
+          <table className="w-full text-left min-w-[700px]">
             <thead>
-              <tr className="bg-muted/30 text-xs font-bold uppercase tracking-widest text-muted-foreground">
-                <th className="px-8 py-4">Customer</th>
-                <th className="px-8 py-4">Contact Info</th>
-                <th className="px-8 py-4">Joined Date</th>
-                <th className="px-8 py-4">Orders</th>
+              <tr className="bg-muted/30 text-[10px] md:text-xs font-bold uppercase tracking-widest text-muted-foreground">
+                <th className="px-4 md:px-8 py-4">Customer</th>
+                <th className="px-4 md:px-8 py-4">Contact Info</th>
+                <th className="px-4 md:px-8 py-4">Joined Date</th>
+                <th className="px-4 md:px-8 py-4">Orders</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border">
@@ -96,40 +96,41 @@ const AdminCustomers = () => {
                     key={c._id}
                     className="group hover:bg-muted/10 transition-colors"
                   >
-                    <td className="px-8 py-5">
-                      <div className="flex items-center gap-4">
-                        <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
-                          <User size={20} />
+                    <td className="px-4 md:px-8 py-5">
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                          <User size={18} />
                         </div>
                         <div className="flex flex-col">
-                          <span className="font-bold text-sm">{c.name}</span>
-                          <span className="text-xs text-muted-foreground capitalize">
+                          <span className="font-bold text-xs md:text-sm">
+                            {c.name}
+                          </span>
+                          <span className="text-[10px] text-muted-foreground capitalize">
                             {c.role}
                           </span>
                         </div>
                       </div>
                     </td>
-                    <td className="px-8 py-5">
+                    <td className="px-4 md:px-8 py-5">
                       <div className="flex flex-col gap-1">
-                        <div className="flex items-center gap-2 text-xs">
-                          <Mail size={14} className="text-muted-foreground" />
+                        <div className="flex items-center gap-2 text-[10px] md:text-xs">
+                          <Mail size={12} className="text-muted-foreground" />
                           {c.email}
                         </div>
-                        <div className="flex items-center gap-2 text-xs">
-                          <Phone size={14} className="text-muted-foreground" />
+                        <div className="flex items-center gap-2 text-[10px] md:text-xs">
+                          <Phone size={12} className="text-muted-foreground" />
                           {c.phone}
                         </div>
                       </div>
                     </td>
-                    <td className="px-8 py-5 text-sm text-muted-foreground">
+                    <td className="px-4 md:px-8 py-5 text-[10px] md:text-sm text-muted-foreground whitespace-nowrap">
                       <div className="flex items-center gap-2">
-                        <Calendar size={14} />
+                        <Calendar size={12} />
                         {new Date(c.createdAt).toLocaleDateString()}
                       </div>
                     </td>
-                    <td className="px-8 py-5">
-                      {/* This could be expanded later to show actual order count */}
-                      <span className="text-xs font-semibold px-2 py-1 bg-muted rounded-md text-muted-foreground">
+                    <td className="px-4 md:px-8 py-5">
+                      <span className="text-[10px] font-semibold px-2 py-1 bg-muted rounded-md text-muted-foreground">
                         Active Account
                       </span>
                     </td>
